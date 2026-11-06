@@ -1312,12 +1312,23 @@ html[dir="rtl"] .util-toggles{margin-left:0; margin-right:8px;}
       </div>
     </div>
 
-    <div id="experiences" class="experience-timeline-section">
-      <div class="section-head reveal">
-        <p class="eyebrow" data-i18n="experiences.eyebrow">Professional Experience</p>
-        <h2 data-i18n="experiences.heading">Where I've worked and learned.</h2>
+    <div class="info-cards reveal" style="margin-top:48px;">
+      <div class="info-card">
+        <div><span class="status-tag" data-i18n="about.card1.tag">Certification</span><b>FPAP</b></div>
+        <small data-i18n="about.card1.sub">FP&amp;A Professional</small>
       </div>
-      <div id="experiencesContainer" class="experience-timeline reveal"></div>
+      <div class="info-card">
+        <div><span class="status-tag" data-i18n="about.card2.tag">Score</span><b>98%</b></div>
+        <small data-i18n="about.card2.sub">FPAP Exam Score</small>
+      </div>
+      <div class="info-card">
+        <div><span class="status-tag" data-i18n="about.card3.tag">Focus</span><b data-i18n="about.card3.val">Financial Analysis</b></div>
+        <small data-i18n="about.card3.sub">Core focus area</small>
+      </div>
+      <div class="info-card status-developing">
+        <div><span class="status-tag" data-i18n="about.card4.tag">Professional</span><b>FMVA®</b></div>
+        <small data-i18n="about.card4.sub">Financial Modeling &amp; Valuation Analyst</small>
+      </div>
     </div>
   </div>
 </section>
@@ -1969,7 +1980,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <script>
 /* Full website CMS layer. Existing design, effects and base translations remain intact. */
 (function(){
-  var cms={settings:{},experiences:[],services:[],approach:[],skills:[],certs:[],navigation:[],sections:[]};
+  var cms={settings:{},services:[],approach:[],skills:[],certs:[],navigation:[],sections:[]};
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
   function lang(row,key){return currentLang==='ar'?(row[key+'_ar']||row[key+'_en']||''):(row[key+'_en']||row[key+'_ar']||'');}
   function getSetting(key){var x=cms.settings[key];return x?(currentLang==='ar'?(x.ar||x.en||''):(x.en||x.ar||'')):'';}
@@ -2004,7 +2015,6 @@ document.addEventListener('DOMContentLoaded', function(){
   function renderServices(){var c=document.getElementById('servicesContainer');if(!c)return;c.innerHTML=cms.services.map(function(r,i){return '<div class="service-card"><div class="service-num">'+String(i+1).padStart(2,'0')+'</div><div class="service-content"><h3>'+esc(lang(r,'title'))+'</h3><p>'+esc(lang(r,'desc'))+'</p></div><div class="service-arrow"><span class="icon-arrow">↗</span></div></div>';}).join('');}
   function renderApproach(){var c=document.getElementById('approachContainer');if(!c)return;c.innerHTML=cms.approach.map(function(r,i){return '<div class="approach-item"><span class="approach-num">'+String(i+1).padStart(2,'0')+'</span><div><h3>'+esc(lang(r,'title'))+'</h3><p>'+esc(lang(r,'desc'))+'</p></div></div>';}).join('');}
   function renderSkills(){var c=document.getElementById('skillsContainer');if(!c)return;c.innerHTML=cms.skills.map(function(r){return '<div class="tool-chip"><span class="dot"></span>'+esc(lang(r,'name'))+'</div>';}).join('');}
-  function renderExperiences(){var c=document.getElementById('experiencesContainer');if(!c)return;c.innerHTML=cms.experiences.map(function(r){var role=esc(lang(r,'role'));var company=esc(lang(r,'company'));var type=esc(lang(r,'employment_type'));var date=esc(lang(r,'date'));var location=esc(lang(r,'location'));var logo=r.logo_url?'<img class="experience-logo" src="'+esc(r.logo_url)+'" alt="" loading="lazy">':'';var companyHtml=r.company_url?'<a class="experience-company" href="'+esc(r.company_url)+'" target="_blank" rel="noopener">'+company+' ↗</a>':'<strong class="experience-company">'+company+'</strong>';return '<article class="experience-card">'+logo+'<div class="experience-main"><h3>'+role+'</h3>'+companyHtml+'<div class="experience-meta">'+[type,date,location].filter(Boolean).join(' <span>·</span> ')+'</div>'+(lang(r,'desc')?'<p>'+esc(lang(r,'desc'))+'</p>':'')+'</div></article>';}).join('');}
   function renderCerts(){var c=document.getElementById('certsContainer');if(!c)return;c.innerHTML=cms.certs.map(function(r){var done=String(r.status_en||'').toLowerCase().indexOf('completed')>=0;var featured=Number(r.featured)===1;var status=esc(lang(r,'status'));var name=esc(lang(r,'name'));var bg=r.logo_url?'<span class="cert-bg" aria-hidden="true" style="background-image:url(&quot;'+esc(r.logo_url)+'&quot;)"></span>':'';return '<div class="cert-card '+(featured?'featured ':'')+(done?'done':'')+'" data-watermark="'+name+'">'+bg+'<span class="cert-status '+(done?'done':'dev')+'">'+status+'</span><h3>'+name+(r.score?' <span class="cert-score">'+esc(r.score)+'</span>':'')+'</h3><p>'+esc(lang(r,'desc'))+'</p>'+(r.provider?'<small>'+esc(r.provider)+'</small>':'')+(r.credential_url?'<a class="project-link" href="'+esc(r.credential_url)+'" target="_blank" rel="noopener">Credential ↗</a>':'')+'</div>';}).join('');}
   var BUILTIN_SECTION_ORDER=['home','about','certs','what-i-do','work','videos','impact','skills','insights','brand','contact'];
   function sectionKey(el){return el.getAttribute('data-cms-section')||el.id||'';}
@@ -2048,68 +2058,27 @@ document.addEventListener('DOMContentLoaded', function(){
     {name_en:'PMP Diploma',name_ar:'دبلومة PMP',status_en:'30 hours',status_ar:'30 ساعة',desc_en:'Start & Planning',desc_ar:'البدء والتخطيط',featured:0}
   ];
   async function load(){
-    var endpoints=[get('/api/settings'),get('/api/experiences'),get('/api/services'),get('/api/approach'),get('/api/skills'),get('/api/certifications'),get('/api/navigation'),get('/api/sections')];
+    var endpoints=[get('/api/settings'),get('/api/services'),get('/api/approach'),get('/api/skills'),get('/api/certifications'),get('/api/navigation'),get('/api/sections')];
     var rs=await Promise.all(endpoints.map(function(p){return p.catch(function(e){console.warn(e);return null;});}));
     cms.settings={};
-    cms.experiences=Array.isArray(rs[1])?rs[1]:[];
     if(Array.isArray(rs[0])) rs[0].forEach(function(x){cms.settings[x.key]={en:x.en,ar:x.ar};});
-    cms.services=Array.isArray(rs[2])?(rs[2].length?rs[2]:FALLBACK_SERVICES):FALLBACK_SERVICES;
-    cms.approach=Array.isArray(rs[3])?rs[3]:[];
-    cms.skills=Array.isArray(rs[4])?rs[4]:[];
-    cms.certs=Array.isArray(rs[5])?(rs[5].length?rs[5]:[]):FALLBACK_CERTS;
-    cms.navigation=Array.isArray(rs[6])?rs[6]:[];
-    cms.sections=Array.isArray(rs[7])?rs[7]:[];
+    cms.services=Array.isArray(rs[1])?(rs[1].length?rs[1]:[]):FALLBACK_SERVICES;
+    cms.approach=Array.isArray(rs[2])?rs[2]:[];
+    cms.skills=Array.isArray(rs[3])?rs[3]:[];
+    cms.certs=Array.isArray(rs[4])?(rs[4].length?rs[4]:[]):FALLBACK_CERTS;
+    cms.navigation=Array.isArray(rs[5])?rs[5]:[];
+    cms.sections=Array.isArray(rs[6])?rs[6]:[];
     applySettings();
     if(typeof baseApplyLang==='function') baseApplyLang(currentLang);
-    renderServices();renderApproach();renderSkills();renderExperiences();renderCerts();renderCustomSections();renderNav();applySectionOrder();
+    renderServices();renderApproach();renderSkills();renderCerts();renderCustomSections();renderNav();applySectionOrder();
     if(window.refreshCms)window.refreshCms();
   }
   // Mark navigation anchors and refresh their labels without disturbing existing menu structure.
   document.querySelectorAll('#site-header .nav-links a[href^="#"], #mobileMenu a[href^="#"]').forEach(function(a){var h=a.getAttribute('href');var slug=h?h.slice(1):'';if(['home','about','work','videos','skills','insights','contact'].indexOf(slug)>=0)a.setAttribute('data-cms-nav',slug);});
   document.addEventListener('DOMContentLoaded',load);
-  if(typeof baseApplyLang==='function'){window.applyLang=function(l){baseApplyLang(l);setTimeout(function(){renderServices();renderApproach();renderSkills();renderExperiences();renderCerts();renderCustomSections();renderNav();applySectionOrder();if(window.refreshCms)window.refreshCms();},0);};}
+  if(typeof baseApplyLang==='function'){window.applyLang=function(l){baseApplyLang(l);setTimeout(function(){renderServices();renderApproach();renderSkills();renderCerts();renderCustomSections();renderNav();applySectionOrder();if(window.refreshCms)window.refreshCms();},0);};}
 })();
 </script>
-
-<style>
-/* Corrected hero layout: preserve the original visual identity without name/photo overlap. */
-@media (min-width:901px){
-  .hero-grid{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr)!important;gap:34px!important;}
-  .hero-copy{min-width:0;padding-top:48px!important;}
-  .hero-title{font-size:clamp(58px,6.1vw,92px)!important;line-height:.94!important;letter-spacing:-.065em!important;overflow-wrap:normal;}
-  .hero-grid>.portrait-stage{grid-column:2;grid-row:1;width:min(560px,100%)!important;height:690px!important;transform:translateY(24px)!important;}
-}
-@media (min-width:901px) and (max-width:1200px){
-  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.9fr)!important;gap:18px!important;}
-  .hero-title{font-size:clamp(54px,5.8vw,72px)!important;}
-  .hero-grid>.portrait-stage{height:600px!important;}
-}
-@media (max-width:900px){
-  .hero{min-height:0!important;padding:118px 0 54px!important;display:block!important;}
-  .hero-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;min-height:0!important;}
-  .hero-copy{padding-top:0!important;z-index:5;}
-  .hero-title{font-size:clamp(54px,11vw,82px)!important;line-height:.94!important;letter-spacing:-.065em!important;}
-  .hero-grid>.portrait-stage{grid-column:1;grid-row:2;width:min(500px,100%)!important;height:clamp(360px,85vw,520px)!important;transform:none!important;margin:0 auto!important;}
-  .credibility-strip{margin-top:0!important;}
-}
-#experiences{margin-top:clamp(58px,8vw,96px);padding-top:clamp(38px,5vw,60px);border-top:1px solid var(--line,rgba(128,128,128,.2));}
-#experiences .section-head{margin-bottom:34px;}
-#experiences .experience-timeline{position:relative;max-width:860px;margin:0 auto;padding:4px 0 4px 34px;}
-#experiences .experience-timeline:before{content:"";position:absolute;left:8px;top:10px;bottom:12px;width:1px;background:linear-gradient(to bottom,var(--accent),rgba(128,128,128,.18));}
-#experiences .experience-card{position:relative;display:flex;gap:20px;align-items:flex-start;margin:0 0 24px;padding:24px 26px;border:1px solid var(--line,rgba(128,128,128,.2));border-radius:16px;background:var(--surface,rgba(128,128,128,.035));}
-#experiences .experience-card:before{content:"";position:absolute;left:-33px;top:30px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--accent);}
-#experiences .experience-logo{width:54px;height:54px;object-fit:contain;border-radius:12px;background:var(--bg);padding:6px;flex:0 0 54px;}
-#experiences .experience-main{min-width:0;flex:1;}
-#experiences .experience-main h3{margin:1px 0 7px;font-size:20px;letter-spacing:-.02em;}
-#experiences .experience-company{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;margin-bottom:9px;}
-#experiences .experience-meta{font-size:.88rem;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px;}
-#experiences .experience-main p{margin:0;line-height:1.75;color:var(--ink-soft);}
-html[dir="rtl"] #experiences .experience-timeline{padding:4px 34px 4px 0;}
-html[dir="rtl"] #experiences .experience-timeline:before{left:auto;right:8px;}
-html[dir="rtl"] #experiences .experience-card:before{left:auto;right:-33px;}
-@media(max-width:600px){#experiences .experience-timeline{padding-left:27px;}html[dir="rtl"] #experiences .experience-timeline{padding-left:0;padding-right:27px;}#experiences .experience-card{gap:13px;padding:19px 17px;}#experiences .experience-logo{width:44px;height:44px;flex-basis:44px;}#experiences .experience-card:before{left:-26px;}html[dir="rtl"] #experiences .experience-card:before{left:auto;right:-26px;}#experiences .experience-main h3{font-size:18px;}}
-</style>
-
 </html>
 <style>
 /* Calm portrait refinement — image only */
@@ -2248,46 +2217,6 @@ html[dir="rtl"] #experiences .experience-card:before{left:auto;right:-33px;}
     letter-spacing:.04em!important;
     color:rgba(255,255,255,.42)!important;
   }
-}
-
-
-/* HERO DIMENSION FIX — correctly embedded in stylesheet */
-.hero{min-height:780px!important;padding:0!important;}
-.hero .hero-grid{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)!important;gap:34px!important;min-height:780px!important;align-items:center!important;}
-.hero .hero-copy{padding-top:12px!important;max-width:690px!important;min-width:0!important;}
-.hero .hero-title{font-size:clamp(54px,5.25vw,82px)!important;line-height:.94!important;letter-spacing:-.065em!important;margin:0 0 20px!important;max-width:100%!important;}
-.hero .hero-role{font-size:11px!important;margin-bottom:22px!important;}
-.hero .hero-statement{font-size:clamp(22px,2.35vw,32px)!important;line-height:1.12!important;max-width:470px!important;margin-bottom:16px!important;}
-.hero .hero-sub{font-size:14px!important;max-width:410px!important;line-height:1.65!important;margin-bottom:28px!important;}
-.hero .portrait-stage{width:min(480px,100%)!important;max-width:480px!important;height:590px!important;margin:0 auto!important;transform:translateY(18px)!important;min-width:0!important;}
-.hero .hero-grid>.portrait-stage{grid-column:2!important;grid-row:1!important;}
-.hero .portrait-image{object-fit:contain!important;object-position:center center!important;}
-.hero .fc-1{top:19%!important;left:2%!important;}
-.hero .fc-2{top:48%!important;right:-1%!important;}
-@media(max-width:1100px){
- .hero{min-height:720px!important;}
- .hero .hero-grid{min-height:720px!important;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)!important;gap:22px!important;}
- .hero .hero-title{font-size:clamp(50px,6.2vw,70px)!important;}
- .hero .portrait-stage{width:min(420px,100%)!important;height:540px!important;}
-}
-@media(max-width:800px){
- .hero{min-height:0!important;padding:92px 0 0!important;}
- .hero .hero-grid{display:flex!important;flex-direction:column!important;gap:4px!important;min-height:0!important;align-items:stretch!important;}
- .hero .hero-copy{padding-top:20px!important;width:100%!important;max-width:100%!important;}
- .hero .hero-title{font-size:clamp(54px,12vw,78px)!important;line-height:.96!important;letter-spacing:-.06em!important;}
- .hero .hero-statement{font-size:clamp(23px,5vw,30px)!important;}
- .hero .portrait-stage{width:min(430px,100%)!important;height:460px!important;margin:4px auto 0!important;transform:none!important;}
- .hero .portrait-image{object-position:center top!important;}
- .hero .fc-1{top:24%!important;left:2%!important;}
- .hero .fc-2{top:48%!important;right:2%!important;}
-}
-@media(max-width:560px){
- .hero{padding-top:92px!important;}
- .hero .hero-title{font-size:clamp(48px,13.5vw,66px)!important;}
- .hero .hero-role{font-size:10px!important;letter-spacing:.04em!important;}
- .hero .hero-statement{font-size:23px!important;}
- .hero .hero-sub{font-size:14px!important;}
- .hero .portrait-stage{height:390px!important;width:100%!important;}
 }
 
 </style>
