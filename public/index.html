@@ -1216,6 +1216,17 @@ html[dir="rtl"] .util-toggles{margin-left:0; margin-right:8px;}
 #certs{padding-top:68px;}
 @media(max-width:860px){.community-impact-grid{grid-template-columns:1fr;}.impact-card{min-height:0;padding:24px;}.community-impact-section .community-impact-intro{font-size:16px;}#about{padding-bottom:54px;}#certs{padding-top:54px;}}
 
+
+/* Featured independent project */
+.featured-platform-section{overflow:hidden;background:var(--surface);}
+.platform-feature-card{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,72px);align-items:center;margin-top:34px;padding:clamp(24px,4vw,52px);border:1px solid var(--border);border-radius:24px;background:var(--bg);box-shadow:0 18px 55px rgba(20,35,50,.07);}
+.platform-badges{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:25px}.platform-badge{padding:8px 12px;border-radius:999px;background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent);font-size:12px;font-weight:700}.platform-status{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-size:12px}.platform-status i{width:7px;height:7px;border-radius:50%;background:#36a879;box-shadow:0 0 0 4px rgba(54,168,121,.12)}
+.platform-kicker{margin:0 0 8px;color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.platform-feature-copy h3{margin:0 0 14px;font-size:clamp(24px,3vw,36px);line-height:1.2;letter-spacing:-.03em}.platform-feature-copy>p:not(.platform-kicker){max-width:580px;color:var(--muted);font-size:15px;line-height:1.85}.platform-capabilities{display:grid;gap:12px;margin:25px 0}.platform-capabilities>div{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:650}.platform-capability-icon{display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;border-radius:10px;background:var(--surface);color:var(--accent);font-size:11px;font-weight:800}.platform-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:25px}.platform-actions .btn{display:inline-flex;align-items:center;gap:12px}.platform-external-note{font-size:11px;color:var(--muted)}
+.platform-visual{position:relative;display:grid;place-items:center;min-height:360px;padding:24px;border-radius:20px;background:radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--accent) 17%,var(--bg)),var(--surface) 70%);isolation:isolate}.platform-window{position:relative;z-index:2;width:min(100%,430px);overflow:hidden;border:1px solid color-mix(in srgb,var(--border) 70%,#fff);border-radius:16px;background:var(--bg);box-shadow:0 24px 60px rgba(20,35,50,.16);transform:rotate(-2deg)}.platform-window-bar{height:38px;display:flex;align-items:center;gap:6px;padding:0 13px;border-bottom:1px solid var(--border);background:var(--surface)}.platform-window-bar>span{width:7px;height:7px;border-radius:50%;background:var(--muted);opacity:.45}.platform-window-bar b{margin-inline-start:auto;color:var(--muted);font-size:9px;letter-spacing:.12em}.platform-window-body{padding:24px}.platform-visual-brand{display:flex;align-items:center;gap:10px}.platform-brand-mark{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:var(--accent);color:white;font-size:12px;font-weight:900}.platform-visual-brand b,.platform-visual-brand small{display:block}.platform-visual-brand b{font-size:12px}.platform-visual-brand small{margin-top:3px;color:var(--muted);font-size:9px}.platform-visual-title{margin:25px 0 18px;font-size:clamp(22px,3vw,29px);font-weight:850;letter-spacing:-.04em}.platform-visual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.platform-visual-grid>div{display:flex;flex-direction:column;gap:7px;padding:13px 10px;border:1px solid var(--border);border-radius:11px;background:var(--surface)}.platform-visual-grid i{font-style:normal;color:var(--accent);font-size:18px}.platform-visual-grid b{font-size:11px}.platform-visual-grid small{font-size:9px;color:var(--muted)}.platform-visual-footer{display:flex;gap:7px;margin-top:18px}.platform-visual-footer span{height:5px;border-radius:9px;background:var(--border)}.platform-visual-footer span:first-child{width:42%;background:var(--accent)}.platform-visual-footer span:nth-child(2){width:25%}.platform-visual-footer span:nth-child(3){width:15%}.platform-orbit{position:absolute;z-index:-1;border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);border-radius:50%;transform:rotate(-22deg)}.platform-orbit-one{width:95%;height:65%}.platform-orbit-two{width:78%;height:92%;transform:rotate(32deg)}
+html[dir="rtl"] .platform-window{transform:rotate(2deg)}
+@media(max-width:850px){.platform-feature-card{grid-template-columns:1fr}.platform-visual{min-height:320px;grid-row:1}.platform-feature-copy{grid-row:2}}
+@media(max-width:480px){.platform-feature-card{padding:18px;border-radius:18px}.platform-visual{min-height:275px;padding:12px}.platform-window-body{padding:17px}.platform-visual-grid{gap:6px}.platform-visual-grid>div{padding:10px 7px}}
+
 </style>
 </head>
 <body>
@@ -1356,33 +1367,46 @@ html[dir="rtl"] .util-toggles{margin-left:0; margin-right:8px;}
   </div>
 </section>
 
-<!-- COMMUNITY IMPACT -->
-<section id="impact" class="community-impact-section">
+<!-- FEATURED PROJECT: AHMED FINANCE -->
+<section id="impact" class="community-impact-section featured-platform-section">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow" data-i18n="impact.eyebrow">Community Impact</p>
-      <h2 data-i18n="impact.heading">Making finance knowledge more accessible.</h2>
-      <p class="community-impact-intro" data-i18n="impact.intro">I build practical, accessible learning experiences that help learners move from understanding concepts to applying them and proving their skills.</p>
+      <p class="eyebrow" data-i18n="impact.eyebrow">Featured Project</p>
+      <h2 data-i18n="impact.heading">Ahmed Finance — Financial Learning Platform</h2>
+      <p class="community-impact-intro" data-i18n="impact.intro">An independent learning platform built to bring financial learning, practice and assessment into one experience.</p>
     </div>
-    <div class="community-impact-grid reveal">
-      <a class="impact-card" href="https://case-lab.pages.dev/" target="_blank" rel="noopener">
-        <span class="impact-card-kicker" data-i18n="impact.case.kicker">Practice</span>
-        <h3 data-i18n="impact.case.title">Case Lab</h3>
-        <p data-i18n="impact.case.desc">Practical case studies that help learners apply financial concepts to realistic business scenarios.</p>
-        <span class="impact-card-link" data-i18n="impact.explore">Explore platform ↗</span>
-      </a>
-      <a class="impact-card" href="https://ahmed-finance-exam.ahmedelsheshtawy-training.workers.dev/" target="_blank" rel="noopener">
-        <span class="impact-card-kicker" data-i18n="impact.exam.kicker">Assessment</span>
-        <h3 data-i18n="impact.exam.title">Learning &amp; Assessment Platform</h3>
-        <p data-i18n="impact.exam.desc">Free learning resources, skill assessments, and achievement certificates that help learners track their progress.</p>
-        <span class="impact-card-link" data-i18n="impact.explore">Explore platform ↗</span>
-      </a>
-      <div class="impact-card impact-card-note">
-        <span class="impact-card-kicker" data-i18n="impact.goal.kicker">The goal</span>
-        <h3 data-i18n="impact.goal.title">Learn. Practice. Prove your skills.</h3>
-        <p data-i18n="impact.goal.desc">Reduce the gap between learning finance theory and building confidence through hands-on practice.</p>
+    <article class="platform-feature-card reveal">
+      <div class="platform-feature-copy">
+        <div class="platform-badges">
+          <span class="platform-badge" data-i18n="impact.badge">Independent Digital Product</span>
+          <span class="platform-status"><i></i><span data-i18n="impact.live">Live platform</span></span>
+        </div>
+        <p class="platform-kicker" data-i18n="impact.roleLabel">My work</p>
+        <h3 data-i18n="impact.roleTitle">Concept, development &amp; product experience</h3>
+        <p data-i18n="impact.roleDesc">I created Ahmed Finance as a standalone platform for financial learning and skills development. The portfolio presents the project; the full experience remains on its own website.</p>
+        <div class="platform-capabilities">
+          <div><span class="platform-capability-icon">01</span><span data-i18n="impact.feature1">Learning resources</span></div>
+          <div><span class="platform-capability-icon">02</span><span data-i18n="impact.feature2">Practice and assessments</span></div>
+          <div><span class="platform-capability-icon">03</span><span data-i18n="impact.feature3">Progress and skill development</span></div>
+        </div>
+        <div class="platform-actions">
+          <a class="btn btn-primary" href="https://exam.ahmedelsheshtawyfin.workers.dev/" target="_blank" rel="noopener noreferrer"><span data-i18n="impact.explore">Explore live platform</span><span aria-hidden="true">↗</span></a>
+          <span class="platform-external-note" data-i18n="impact.external">Opens the independent platform in a new tab.</span>
+        </div>
       </div>
-    </div>
+      <div class="platform-visual" aria-label="Ahmed Finance platform preview">
+        <div class="platform-window">
+          <div class="platform-window-bar"><span></span><span></span><span></span><b>AHMED FINANCE</b></div>
+          <div class="platform-window-body">
+            <div class="platform-visual-brand"><span class="platform-brand-mark">AF</span><div><b>Ahmed Finance</b><small data-i18n="impact.visualSub">Learning workspace</small></div></div>
+            <div class="platform-visual-title" data-i18n="impact.visualTitle">Learn. Practice. Grow.</div>
+            <div class="platform-visual-grid"><div><i>▤</i><b data-i18n="impact.visualCard1">Learn</b><small data-i18n="impact.visualDesc1">Explore resources</small></div><div><i>✓</i><b data-i18n="impact.visualCard2">Assess</b><small data-i18n="impact.visualDesc2">Test your skills</small></div><div><i>↗</i><b data-i18n="impact.visualCard3">Progress</b><small data-i18n="impact.visualDesc3">Build confidence</small></div></div>
+            <div class="platform-visual-footer"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+        <div class="platform-orbit platform-orbit-one"></div><div class="platform-orbit platform-orbit-two"></div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -1536,10 +1560,28 @@ var translations = {
   "about.card3.sub":{en:"Core focus area",ar:"مجال التركيز الأساسي"},
   "about.card4.tag":{en:"Professional",ar:"اعتماد مهني"},
   "about.card4.sub":{en:"Financial Modeling & Valuation Analyst",ar:"محلل النمذجة والتقييم المالي"},
-  "about.impactLink":{en:"Community Impact ↓",ar:"الأثر المجتمعي ↓"},
+  "about.impactLink":{en:"Featured Project ↓",ar:"مشروع مميز ↓"},
   "impact.eyebrow":{en:"Community Impact",ar:"الأثر المجتمعي"},
-  "impact.heading":{en:"Making finance knowledge more accessible.",ar:"نجعل المعرفة المالية أكثر إتاحة للجميع."},
-  "impact.intro":{en:"I build practical, accessible learning experiences that help learners move from understanding concepts to applying them and proving their skills.",ar:"أعمل على بناء تجارب تعليمية عملية ومتاحة تساعد المتعلمين على الانتقال من فهم المفاهيم إلى تطبيقها وإثبات مهاراتهم."},
+  "impact.heading":{en:"Ahmed Finance — Financial Learning Platform",ar:"Ahmed Finance — منصة التعلم المالي"},
+  "impact.intro":{en:"An independent learning platform built to bring financial learning, practice and assessment into one experience.",ar:"منصة تعليمية مستقلة تجمع التعلم المالي والتطبيق العملي وتقييم المهارات في تجربة واحدة."},
+   "impact.badge":{en:"Independent Digital Product",ar:"منتج رقمي مستقل"},
+   "impact.live":{en:"Live platform",ar:"منصة متاحة"},
+   "impact.roleLabel":{en:"My work",ar:"دوري في المشروع"},
+   "impact.roleTitle":{en:"Concept, development & product experience",ar:"الفكرة والتطوير وتجربة المنتج"},
+   "impact.roleDesc":{en:"I created Ahmed Finance as a standalone platform for financial learning and skills development. The portfolio presents the project; the full experience remains on its own website.",ar:"أنشأت Ahmed Finance كمنصة مستقلة للتعلم المالي وتطوير المهارات. يعرض البورتفوليو المشروع ودوري فيه، بينما تظل التجربة الكاملة على موقع المنصة المستقل."},
+   "impact.feature1":{en:"Learning resources",ar:"مصادر تعليمية"},
+   "impact.feature2":{en:"Practice and assessments",ar:"تطبيق عملي واختبارات تقييم"},
+   "impact.feature3":{en:"Progress and skill development",ar:"متابعة التقدم وتطوير المهارات"},
+   "impact.explore":{en:"Explore live platform",ar:"استكشف المنصة"},
+   "impact.external":{en:"Opens the independent platform in a new tab.",ar:"يفتح الموقع المستقل للمنصة في علامة تبويب جديدة."},
+   "impact.visualSub":{en:"Learning workspace",ar:"مساحة التعلم"},
+   "impact.visualTitle":{en:"Learn. Practice. Grow.",ar:"تعلّم. طبّق. تطوّر."},
+   "impact.visualCard1":{en:"Learn",ar:"تعلّم"},
+   "impact.visualDesc1":{en:"Explore resources",ar:"استكشف المحتوى"},
+   "impact.visualCard2":{en:"Assess",ar:"قيّم"},
+   "impact.visualDesc2":{en:"Test your skills",ar:"اختبر مهاراتك"},
+   "impact.visualCard3":{en:"Progress",ar:"تقدّم"},
+   "impact.visualDesc3":{en:"Build confidence",ar:"عزّز ثقتك"},
   "impact.case.kicker":{en:"Practice",ar:"تطبيق عملي"},
   "impact.case.title":{en:"Case Lab",ar:"Case Lab – مختبر دراسات الحالة"},
   "impact.case.desc":{en:"Practical case studies that help learners apply financial concepts to realistic business scenarios.",ar:"دراسات حالة عملية تساعد المتعلمين على تطبيق المفاهيم المالية على سيناريوهات واقعية في عالم الأعمال."},
