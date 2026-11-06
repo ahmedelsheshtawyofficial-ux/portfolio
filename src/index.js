@@ -42,6 +42,26 @@ async function ensureTables(env){
     env.DB.prepare(`CREATE TABLE IF NOT EXISTS custom_sections (id INTEGER PRIMARY KEY AUTOINCREMENT, slug TEXT NOT NULL UNIQUE, label_en TEXT DEFAULT '', label_ar TEXT DEFAULT '', title_en TEXT NOT NULL, title_ar TEXT DEFAULT '', desc_en TEXT DEFAULT '', desc_ar TEXT DEFAULT '', content_en TEXT DEFAULT '', content_ar TEXT DEFAULT '', image_url TEXT DEFAULT '', cta_label_en TEXT DEFAULT '', cta_label_ar TEXT DEFAULT '', cta_url TEXT DEFAULT '', background TEXT DEFAULT '', published INTEGER NOT NULL DEFAULT 1, sort_order INTEGER NOT NULL DEFAULT 0)`),
     env.DB.prepare(`CREATE TABLE IF NOT EXISTS admin_tools (id INTEGER PRIMARY KEY AUTOINCREMENT, slug TEXT NOT NULL UNIQUE, name_en TEXT NOT NULL, name_ar TEXT DEFAULT '', url TEXT NOT NULL, description_en TEXT DEFAULT '', description_ar TEXT DEFAULT '', sort_order INTEGER NOT NULL DEFAULT 0)`)
   ]);
+  // Seed the editable Experience Timeline for existing and new databases.
+  // INSERT OR IGNORE preserves any timeline already managed by the admin.
+  const defaultTimeline = [{
+    sort_order: 1,
+    visible: true,
+    date_en: 'Jul 2025 – Aug 2025 · 2 mos',
+    date_ar: 'يوليو 2025 – أغسطس 2025 · شهران',
+    role_en: 'Internship Trainee',
+    role_ar: 'متدرب',
+    organization_en: 'CIB Egypt',
+    organization_ar: 'البنك التجاري الدولي – مصر',
+    type_en: 'Internship',
+    type_ar: 'تدريب',
+    location_en: 'Egypt',
+    location_ar: 'مصر',
+    description_en: '',
+    description_ar: ''
+  }];
+  await env.DB.prepare('INSERT OR IGNORE INTO site_settings (key,en,ar) VALUES (?,?,?)')
+    .bind('about.timeline', JSON.stringify(defaultTimeline), JSON.stringify(defaultTimeline)).run();
   // Backward-compatible schema upgrade for existing D1 databases.
   const cols=await env.DB.prepare("PRAGMA table_info(projects)").all();
   const names=new Set((cols.results||[]).map(x=>x.name));
