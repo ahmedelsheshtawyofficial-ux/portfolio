@@ -1333,17 +1333,6 @@ html[dir="rtl"] .util-toggles{margin-left:0; margin-right:8px;}
   </div>
 </section>
 
-<!-- PROFESSIONAL EXPERIENCE -->
-<section id="experiences">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <p class="eyebrow" data-i18n="experiences.eyebrow">Professional Experience</p>
-      <h2 data-i18n="experiences.heading">Where I've worked and learned.</h2>
-    </div>
-    <div id="experiencesContainer" class="certs-grid reveal"></div>
-  </div>
-</section>
-
 <!-- CERTIFICATIONS -->
 <section id="certs">
   <div class="wrap">
@@ -2026,9 +2015,8 @@ document.addEventListener('DOMContentLoaded', function(){
   function renderServices(){var c=document.getElementById('servicesContainer');if(!c)return;c.innerHTML=cms.services.map(function(r,i){return '<div class="service-card"><div class="service-num">'+String(i+1).padStart(2,'0')+'</div><div class="service-content"><h3>'+esc(lang(r,'title'))+'</h3><p>'+esc(lang(r,'desc'))+'</p></div><div class="service-arrow"><span class="icon-arrow">↗</span></div></div>';}).join('');}
   function renderApproach(){var c=document.getElementById('approachContainer');if(!c)return;c.innerHTML=cms.approach.map(function(r,i){return '<div class="approach-item"><span class="approach-num">'+String(i+1).padStart(2,'0')+'</span><div><h3>'+esc(lang(r,'title'))+'</h3><p>'+esc(lang(r,'desc'))+'</p></div></div>';}).join('');}
   function renderSkills(){var c=document.getElementById('skillsContainer');if(!c)return;c.innerHTML=cms.skills.map(function(r){return '<div class="tool-chip"><span class="dot"></span>'+esc(lang(r,'name'))+'</div>';}).join('');}
-  function renderExperiences(){var c=document.getElementById('experiencesContainer');if(!c)return;c.innerHTML=cms.experiences.map(function(r){var role=esc(lang(r,'role'));var company=esc(lang(r,'company'));var type=esc(lang(r,'employment_type'));var date=esc(lang(r,'date'));var location=esc(lang(r,'location'));var logo=r.logo_url?'<img class="experience-logo" src="'+esc(r.logo_url)+'" alt="" loading="lazy">':'';var heading='<h3>'+role+'</h3>';var companyHtml=r.company_url?'<a class="experience-company" href="'+esc(r.company_url)+'" target="_blank" rel="noopener">'+company+' ↗</a>':'<strong class="experience-company">'+company+'</strong>';return '<article class="cert-card experience-card">'+logo+'<div class="experience-main">'+heading+companyHtml+'<div class="experience-meta">'+[type,date,location].filter(Boolean).join(' <span>·</span> ')+'</div>'+(lang(r,'desc')?'<p>'+esc(lang(r,'desc'))+'</p>':'')+'</div></article>';}).join('');}
   function renderCerts(){var c=document.getElementById('certsContainer');if(!c)return;c.innerHTML=cms.certs.map(function(r){var done=String(r.status_en||'').toLowerCase().indexOf('completed')>=0;var featured=Number(r.featured)===1;var status=esc(lang(r,'status'));var name=esc(lang(r,'name'));var bg=r.logo_url?'<span class="cert-bg" aria-hidden="true" style="background-image:url(&quot;'+esc(r.logo_url)+'&quot;)"></span>':'';return '<div class="cert-card '+(featured?'featured ':'')+(done?'done':'')+'" data-watermark="'+name+'">'+bg+'<span class="cert-status '+(done?'done':'dev')+'">'+status+'</span><h3>'+name+(r.score?' <span class="cert-score">'+esc(r.score)+'</span>':'')+'</h3><p>'+esc(lang(r,'desc'))+'</p>'+(r.provider?'<small>'+esc(r.provider)+'</small>':'')+(r.credential_url?'<a class="project-link" href="'+esc(r.credential_url)+'" target="_blank" rel="noopener">Credential ↗</a>':'')+'</div>';}).join('');}
-  var BUILTIN_SECTION_ORDER=['home','about','experiences','certs','what-i-do','work','videos','impact','skills','insights','brand','contact'];
+  var BUILTIN_SECTION_ORDER=['home','about','certs','what-i-do','work','videos','impact','skills','insights','brand','contact'];
   function sectionKey(el){return el.getAttribute('data-cms-section')||el.id||'';}
   function renderCustomSections(){
     document.querySelectorAll('section.cms-custom-section').forEach(function(el){el.remove();});
@@ -2070,26 +2058,25 @@ document.addEventListener('DOMContentLoaded', function(){
     {name_en:'PMP Diploma',name_ar:'دبلومة PMP',status_en:'30 hours',status_ar:'30 ساعة',desc_en:'Start & Planning',desc_ar:'البدء والتخطيط',featured:0}
   ];
   async function load(){
-    var endpoints=[get('/api/settings'),get('/api/experiences'),get('/api/services'),get('/api/approach'),get('/api/skills'),get('/api/certifications'),get('/api/navigation'),get('/api/sections')];
+    var endpoints=[get('/api/settings'),get('/api/services'),get('/api/approach'),get('/api/skills'),get('/api/certifications'),get('/api/navigation'),get('/api/sections')];
     var rs=await Promise.all(endpoints.map(function(p){return p.catch(function(e){console.warn(e);return null;});}));
     cms.settings={};
-    cms.experiences=Array.isArray(rs[1])?rs[1]:[];
     if(Array.isArray(rs[0])) rs[0].forEach(function(x){cms.settings[x.key]={en:x.en,ar:x.ar};});
-    cms.services=Array.isArray(rs[2])?(rs[2].length?rs[2]:FALLBACK_SERVICES):FALLBACK_SERVICES;
-    cms.approach=Array.isArray(rs[3])?rs[3]:[];
-    cms.skills=Array.isArray(rs[4])?rs[4]:[];
-    cms.certs=Array.isArray(rs[5])?(rs[5].length?rs[5]:[]):FALLBACK_CERTS;
-    cms.navigation=Array.isArray(rs[6])?rs[6]:[];
-    cms.sections=Array.isArray(rs[7])?rs[7]:[];
+    cms.services=Array.isArray(rs[1])?(rs[1].length?rs[1]:[]):FALLBACK_SERVICES;
+    cms.approach=Array.isArray(rs[2])?rs[2]:[];
+    cms.skills=Array.isArray(rs[3])?rs[3]:[];
+    cms.certs=Array.isArray(rs[4])?(rs[4].length?rs[4]:[]):FALLBACK_CERTS;
+    cms.navigation=Array.isArray(rs[5])?rs[5]:[];
+    cms.sections=Array.isArray(rs[6])?rs[6]:[];
     applySettings();
     if(typeof baseApplyLang==='function') baseApplyLang(currentLang);
-    renderServices();renderApproach();renderSkills();renderExperiences();renderCerts();renderCustomSections();renderNav();applySectionOrder();
+    renderServices();renderApproach();renderSkills();renderCerts();renderCustomSections();renderNav();applySectionOrder();
     if(window.refreshCms)window.refreshCms();
   }
   // Mark navigation anchors and refresh their labels without disturbing existing menu structure.
   document.querySelectorAll('#site-header .nav-links a[href^="#"], #mobileMenu a[href^="#"]').forEach(function(a){var h=a.getAttribute('href');var slug=h?h.slice(1):'';if(['home','about','work','videos','skills','insights','contact'].indexOf(slug)>=0)a.setAttribute('data-cms-nav',slug);});
   document.addEventListener('DOMContentLoaded',load);
-  if(typeof baseApplyLang==='function'){window.applyLang=function(l){baseApplyLang(l);setTimeout(function(){renderServices();renderApproach();renderSkills();renderExperiences();renderCerts();renderCustomSections();renderNav();applySectionOrder();if(window.refreshCms)window.refreshCms();},0);};}
+  if(typeof baseApplyLang==='function'){window.applyLang=function(l){baseApplyLang(l);setTimeout(function(){renderServices();renderApproach();renderSkills();renderCerts();renderCustomSections();renderNav();applySectionOrder();if(window.refreshCms)window.refreshCms();},0);};}
 })();
 </script>
 </html>
@@ -2232,15 +2219,4 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 }
 
-</style>
-
-<style>
-#experiences .experience-card{display:flex;gap:22px;align-items:flex-start;min-height:0;}
-#experiences .experience-logo{width:58px;height:58px;object-fit:contain;border-radius:12px;background:var(--surface);padding:7px;flex:0 0 58px;}
-#experiences .experience-main{min-width:0;flex:1;}
-#experiences .experience-main h3{margin:4px 0 8px;}
-#experiences .experience-company{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;margin-bottom:10px;}
-#experiences .experience-meta{font-size:.88rem;opacity:.72;display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px;}
-#experiences .experience-main p{margin:0;line-height:1.7;}
-@media(max-width:600px){#experiences .experience-card{gap:13px;}#experiences .experience-logo{width:44px;height:44px;flex-basis:44px;}}
 </style>
