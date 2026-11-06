@@ -1969,7 +1969,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <script>
 /* Full website CMS layer. Existing design, effects and base translations remain intact. */
 (function(){
-  var cms={settings:{},services:[],approach:[],skills:[],certs:[],navigation:[],sections:[]};
+  var cms={settings:{},experiences:[],services:[],approach:[],skills:[],certs:[],navigation:[],sections:[]};
   function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
   function lang(row,key){return currentLang==='ar'?(row[key+'_ar']||row[key+'_en']||''):(row[key+'_en']||row[key+'_ar']||'');}
   function getSetting(key){var x=cms.settings[key];return x?(currentLang==='ar'?(x.ar||x.en||''):(x.en||x.ar||'')):'';}
@@ -2004,9 +2004,9 @@ document.addEventListener('DOMContentLoaded', function(){
   function renderServices(){var c=document.getElementById('servicesContainer');if(!c)return;c.innerHTML=cms.services.map(function(r,i){return '<div class="service-card"><div class="service-num">'+String(i+1).padStart(2,'0')+'</div><div class="service-content"><h3>'+esc(lang(r,'title'))+'</h3><p>'+esc(lang(r,'desc'))+'</p></div><div class="service-arrow"><span class="icon-arrow">↗</span></div></div>';}).join('');}
   function renderApproach(){var c=document.getElementById('approachContainer');if(!c)return;c.innerHTML=cms.approach.map(function(r,i){return '<div class="approach-item"><span class="approach-num">'+String(i+1).padStart(2,'0')+'</span><div><h3>'+esc(lang(r,'title'))+'</h3><p>'+esc(lang(r,'desc'))+'</p></div></div>';}).join('');}
   function renderSkills(){var c=document.getElementById('skillsContainer');if(!c)return;c.innerHTML=cms.skills.map(function(r){return '<div class="tool-chip"><span class="dot"></span>'+esc(lang(r,'name'))+'</div>';}).join('');}
-  function renderExperiences(){var c=document.getElementById('experiencesContainer');if(!c)return;c.innerHTML=cms.experiences.map(function(r){var role=esc(lang(r,'role'));var company=esc(lang(r,'company'));var type=esc(lang(r,'employment_type'));var date=esc(lang(r,'date'));var location=esc(lang(r,'location'));var logo=r.logo_url?'<img class="experience-logo" src="'+esc(r.logo_url)+'" alt="" loading="lazy">':'';var heading='<h3>'+role+'</h3>';var companyHtml=r.company_url?'<a class="experience-company" href="'+esc(r.company_url)+'" target="_blank" rel="noopener">'+company+' ↗</a>':'<strong class="experience-company">'+company+'</strong>';return '<article class="experience-card">'+logo+'<div class="experience-main">'+heading+companyHtml+'<div class="experience-meta">'+[type,date,location].filter(Boolean).join(' <span>·</span> ')+'</div>'+(lang(r,'desc')?'<p>'+esc(lang(r,'desc'))+'</p>':'')+'</div></article>';}).join('');}
+  function renderExperiences(){var c=document.getElementById('experiencesContainer');if(!c)return;c.innerHTML=cms.experiences.map(function(r){var role=esc(lang(r,'role'));var company=esc(lang(r,'company'));var type=esc(lang(r,'employment_type'));var date=esc(lang(r,'date'));var location=esc(lang(r,'location'));var logo=r.logo_url?'<img class="experience-logo" src="'+esc(r.logo_url)+'" alt="" loading="lazy">':'';var companyHtml=r.company_url?'<a class="experience-company" href="'+esc(r.company_url)+'" target="_blank" rel="noopener">'+company+' ↗</a>':'<strong class="experience-company">'+company+'</strong>';return '<article class="experience-card">'+logo+'<div class="experience-main"><h3>'+role+'</h3>'+companyHtml+'<div class="experience-meta">'+[type,date,location].filter(Boolean).join(' <span>·</span> ')+'</div>'+(lang(r,'desc')?'<p>'+esc(lang(r,'desc'))+'</p>':'')+'</div></article>';}).join('');}
   function renderCerts(){var c=document.getElementById('certsContainer');if(!c)return;c.innerHTML=cms.certs.map(function(r){var done=String(r.status_en||'').toLowerCase().indexOf('completed')>=0;var featured=Number(r.featured)===1;var status=esc(lang(r,'status'));var name=esc(lang(r,'name'));var bg=r.logo_url?'<span class="cert-bg" aria-hidden="true" style="background-image:url(&quot;'+esc(r.logo_url)+'&quot;)"></span>':'';return '<div class="cert-card '+(featured?'featured ':'')+(done?'done':'')+'" data-watermark="'+name+'">'+bg+'<span class="cert-status '+(done?'done':'dev')+'">'+status+'</span><h3>'+name+(r.score?' <span class="cert-score">'+esc(r.score)+'</span>':'')+'</h3><p>'+esc(lang(r,'desc'))+'</p>'+(r.provider?'<small>'+esc(r.provider)+'</small>':'')+(r.credential_url?'<a class="project-link" href="'+esc(r.credential_url)+'" target="_blank" rel="noopener">Credential ↗</a>':'')+'</div>';}).join('');}
-  var BUILTIN_SECTION_ORDER=['home','about','experiences','certs','what-i-do','work','videos','impact','skills','insights','brand','contact'];
+  var BUILTIN_SECTION_ORDER=['home','about','certs','what-i-do','work','videos','impact','skills','insights','brand','contact'];
   function sectionKey(el){return el.getAttribute('data-cms-section')||el.id||'';}
   function renderCustomSections(){
     document.querySelectorAll('section.cms-custom-section').forEach(function(el){el.remove();});
@@ -2070,6 +2070,46 @@ document.addEventListener('DOMContentLoaded', function(){
   if(typeof baseApplyLang==='function'){window.applyLang=function(l){baseApplyLang(l);setTimeout(function(){renderServices();renderApproach();renderSkills();renderExperiences();renderCerts();renderCustomSections();renderNav();applySectionOrder();if(window.refreshCms)window.refreshCms();},0);};}
 })();
 </script>
+
+<style>
+/* Corrected hero layout: preserve the original visual identity without name/photo overlap. */
+@media (min-width:901px){
+  .hero-grid{grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr)!important;gap:34px!important;}
+  .hero-copy{min-width:0;padding-top:48px!important;}
+  .hero-title{font-size:clamp(58px,6.1vw,92px)!important;line-height:.94!important;letter-spacing:-.065em!important;overflow-wrap:normal;}
+  .hero-grid>.portrait-stage{grid-column:2;grid-row:1;width:min(560px,100%)!important;height:690px!important;transform:translateY(24px)!important;}
+}
+@media (min-width:901px) and (max-width:1200px){
+  .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,.9fr)!important;gap:18px!important;}
+  .hero-title{font-size:clamp(54px,5.8vw,72px)!important;}
+  .hero-grid>.portrait-stage{height:600px!important;}
+}
+@media (max-width:900px){
+  .hero{min-height:0!important;padding:118px 0 54px!important;display:block!important;}
+  .hero-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;min-height:0!important;}
+  .hero-copy{padding-top:0!important;z-index:5;}
+  .hero-title{font-size:clamp(54px,11vw,82px)!important;line-height:.94!important;letter-spacing:-.065em!important;}
+  .hero-grid>.portrait-stage{grid-column:1;grid-row:2;width:min(500px,100%)!important;height:clamp(360px,85vw,520px)!important;transform:none!important;margin:0 auto!important;}
+  .credibility-strip{margin-top:0!important;}
+}
+#experiences{margin-top:clamp(58px,8vw,96px);padding-top:clamp(38px,5vw,60px);border-top:1px solid var(--line,rgba(128,128,128,.2));}
+#experiences .section-head{margin-bottom:34px;}
+#experiences .experience-timeline{position:relative;max-width:860px;margin:0 auto;padding:4px 0 4px 34px;}
+#experiences .experience-timeline:before{content:"";position:absolute;left:8px;top:10px;bottom:12px;width:1px;background:linear-gradient(to bottom,var(--accent),rgba(128,128,128,.18));}
+#experiences .experience-card{position:relative;display:flex;gap:20px;align-items:flex-start;margin:0 0 24px;padding:24px 26px;border:1px solid var(--line,rgba(128,128,128,.2));border-radius:16px;background:var(--surface,rgba(128,128,128,.035));}
+#experiences .experience-card:before{content:"";position:absolute;left:-33px;top:30px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--accent);}
+#experiences .experience-logo{width:54px;height:54px;object-fit:contain;border-radius:12px;background:var(--bg);padding:6px;flex:0 0 54px;}
+#experiences .experience-main{min-width:0;flex:1;}
+#experiences .experience-main h3{margin:1px 0 7px;font-size:20px;letter-spacing:-.02em;}
+#experiences .experience-company{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;margin-bottom:9px;}
+#experiences .experience-meta{font-size:.88rem;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px;}
+#experiences .experience-main p{margin:0;line-height:1.75;color:var(--ink-soft);}
+html[dir="rtl"] #experiences .experience-timeline{padding:4px 34px 4px 0;}
+html[dir="rtl"] #experiences .experience-timeline:before{left:auto;right:8px;}
+html[dir="rtl"] #experiences .experience-card:before{left:auto;right:-33px;}
+@media(max-width:600px){#experiences .experience-timeline{padding-left:27px;}html[dir="rtl"] #experiences .experience-timeline{padding-left:0;padding-right:27px;}#experiences .experience-card{gap:13px;padding:19px 17px;}#experiences .experience-logo{width:44px;height:44px;flex-basis:44px;}#experiences .experience-card:before{left:-26px;}html[dir="rtl"] #experiences .experience-card:before{left:auto;right:-26px;}#experiences .experience-main h3{font-size:18px;}}
+</style>
+
 </html>
 <style>
 /* Calm portrait refinement — image only */
@@ -2210,32 +2250,4 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 }
 
-</style>
-
-<style>
-#experiences .experience-card{display:flex;gap:22px;align-items:flex-start;min-height:0;}
-#experiences .experience-logo{width:58px;height:58px;object-fit:contain;border-radius:12px;background:var(--surface);padding:7px;flex:0 0 58px;}
-#experiences .experience-main{min-width:0;flex:1;}
-#experiences .experience-main h3{margin:4px 0 8px;}
-#experiences .experience-company{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;margin-bottom:10px;}
-#experiences .experience-meta{font-size:.88rem;opacity:.72;display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px;}
-#experiences .experience-main p{margin:0;line-height:1.7;}
-@media(max-width:600px){#experiences .experience-card{gap:13px;}#experiences .experience-logo{width:44px;height:44px;flex-basis:44px;}}
-/* Professional experience timeline inside About */
-#experiences{margin-top:clamp(58px,8vw,96px);padding-top:clamp(38px,5vw,60px);border-top:1px solid var(--line,rgba(128,128,128,.2));}
-#experiences .section-head{margin-bottom:34px;}
-#experiences .experience-timeline{position:relative;max-width:860px;margin:0 auto;padding:4px 0 4px 34px;}
-#experiences .experience-timeline:before{content:"";position:absolute;left:8px;top:10px;bottom:12px;width:1px;background:linear-gradient(to bottom,var(--accent),rgba(128,128,128,.18));}
-#experiences .experience-card{position:relative;display:flex;gap:20px;align-items:flex-start;margin:0 0 24px;padding:24px 26px;border:1px solid var(--line,rgba(128,128,128,.2));border-radius:16px;background:var(--surface,rgba(128,128,128,.035));}
-#experiences .experience-card:before{content:"";position:absolute;left:-33px;top:30px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--accent);}
-#experiences .experience-logo{width:54px;height:54px;object-fit:contain;border-radius:12px;background:var(--bg);padding:6px;flex:0 0 54px;}
-#experiences .experience-main{min-width:0;flex:1;}
-#experiences .experience-main h3{margin:1px 0 7px;font-size:20px;letter-spacing:-.02em;}
-#experiences .experience-company{display:inline-block;color:var(--accent);font-weight:700;text-decoration:none;margin-bottom:9px;}
-#experiences .experience-meta{font-size:.88rem;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px;}
-#experiences .experience-main p{margin:0;line-height:1.75;color:var(--ink-soft);}
-html[dir="rtl"] #experiences .experience-timeline{padding:4px 34px 4px 0;}
-html[dir="rtl"] #experiences .experience-timeline:before{left:auto;right:8px;}
-html[dir="rtl"] #experiences .experience-card:before{left:auto;right:-33px;}
-@media(max-width:600px){#experiences .experience-timeline{padding-left:27px;}html[dir="rtl"] #experiences .experience-timeline{padding-left:0;padding-right:27px;}#experiences .experience-card{gap:13px;padding:19px 17px;}#experiences .experience-logo{width:44px;height:44px;flex-basis:44px;}#experiences .experience-card:before{left:-26px;}html[dir="rtl"] #experiences .experience-card:before{left:auto;right:-26px;}#experiences .experience-main h3{font-size:18px;}}
 </style>
