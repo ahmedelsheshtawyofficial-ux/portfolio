@@ -7,4 +7,4 @@ Disallow: /admin
 User-agent: LinkedInBot
 Allow: /
 
-Sitemap: https://ahmed-portfolio.ahmedelsheshtawyofficial.workers.dev/sitemap.xml
+Sitemap: https://portfolio.ahmedelsheshtawyofficial.workers.dev/sitemap.xml
