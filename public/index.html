@@ -264,6 +264,10 @@ nav{display:flex; align-items:center; justify-content:space-between;}
   font-family:var(--mono); font-size:12.5px; letter-spacing:.04em; color:var(--ink-faint); text-transform:uppercase;
 }
 
+
+/* Career timeline — CMS managed */
+.career-timeline-wrap{max-width:100%;}.timeline-heading{margin-bottom:28px}.timeline-heading h3{font-size:clamp(25px,3vw,36px);letter-spacing:-.03em}.career-timeline{position:relative;display:grid;gap:0;max-width:900px}.career-timeline:before{content:"";position:absolute;inset-block:12px 12px;inset-inline-start:9px;width:1px;background:var(--line)}.timeline-item{position:relative;padding:0 0 30px 38px}.timeline-item:last-child{padding-bottom:0}.timeline-item:before{content:"";position:absolute;inset-inline-start:3px;top:7px;width:13px;height:13px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px var(--bg)}.timeline-date{font:600 12px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}.timeline-role{font-size:20px;font-weight:650;margin:0 0 4px}.timeline-org{font-size:14px;color:var(--ink-soft);margin-bottom:7px}.timeline-meta{font-size:13px;color:var(--muted);line-height:1.6}.timeline-desc{font-size:14px;color:var(--ink-soft);margin-top:8px;max-width:680px}
+
 /* ============ ABOUT ============ */
 .about-grid{display:grid; grid-template-columns:0.95fr 1.05fr; gap:64px; align-items:start;}
 @media(max-width:860px){.about-grid{grid-template-columns:1fr; gap:40px;}}
@@ -1309,23 +1313,9 @@ html[dir="rtl"] .util-toggles{margin-left:0; margin-right:8px;}
       </div>
     </div>
 
-    <div class="info-cards reveal" style="margin-top:48px;">
-      <div class="info-card">
-        <div><span class="status-tag" data-i18n="about.card1.tag">Certification</span><b>FPAP</b></div>
-        <small data-i18n="about.card1.sub">FP&amp;A Professional</small>
-      </div>
-      <div class="info-card">
-        <div><span class="status-tag" data-i18n="about.card2.tag">Score</span><b>98%</b></div>
-        <small data-i18n="about.card2.sub">FPAP Exam Score</small>
-      </div>
-      <div class="info-card">
-        <div><span class="status-tag" data-i18n="about.card3.tag">Focus</span><b data-i18n="about.card3.val">Financial Analysis</b></div>
-        <small data-i18n="about.card3.sub">Core focus area</small>
-      </div>
-      <div class="info-card status-developing">
-        <div><span class="status-tag" data-i18n="about.card4.tag">Professional</span><b>FMVA®</b></div>
-        <small data-i18n="about.card4.sub">Financial Modeling &amp; Valuation Analyst</small>
-      </div>
+    <div class="career-timeline-wrap reveal" style="margin-top:64px;">
+      <div class="timeline-heading"><p class="eyebrow" data-i18n="timeline.eyebrow">Career Journey</p><h3 data-i18n="timeline.heading">Experience Timeline</h3></div>
+      <div id="careerTimeline" class="career-timeline"></div>
     </div>
   </div>
 </section>
@@ -1531,6 +1521,8 @@ var translations = {
   "strip.analysis":{en:"Financial Analysis",ar:"التحليل المالي"},
   "strip.accounting":{en:"Accounting",ar:"المحاسبة"},
 
+  "timeline.eyebrow":{en:"Career Journey",ar:"المسيرة المهنية"},
+  "timeline.heading":{en:"Experience Timeline",ar:"الخبرات المهنية"},
   "about.eyebrow":{en:"About Me",ar:"نبذة عني"},
   "about.heading":{en:'Numbers tell a story.<br><span style="color:var(--accent);">I analyze it.</span>',ar:'الأرقام تحكي قصة.<br><span style="color:var(--accent);">وأنا أحللها.</span>'},
   "about.p1":{en:"I'm an Accounting graduate with a strong interest in financial analysis, financial modeling, and FP&A.",ar:"أنا خريج محاسبة ولديّ اهتمام كبير بالتحليل المالي والنمذجة المالية والتخطيط والتحليل المالي (FP&A)."},
@@ -2043,6 +2035,7 @@ document.addEventListener('DOMContentLoaded', function(){
   function renderServices(){var c=document.getElementById('servicesContainer');if(!c)return;c.innerHTML=cms.services.map(function(r,i){return '<div class="service-card"><div class="service-num">'+String(i+1).padStart(2,'0')+'</div><div class="service-content"><h3>'+esc(lang(r,'title'))+'</h3><p>'+esc(lang(r,'desc'))+'</p></div><div class="service-arrow"><span class="icon-arrow">↗</span></div></div>';}).join('');}
   function renderApproach(){var c=document.getElementById('approachContainer');if(!c)return;c.innerHTML=cms.approach.map(function(r,i){return '<div class="approach-item"><span class="approach-num">'+String(i+1).padStart(2,'0')+'</span><div><h3>'+esc(lang(r,'title'))+'</h3><p>'+esc(lang(r,'desc'))+'</p></div></div>';}).join('');}
   function renderSkills(){var c=document.getElementById('skillsContainer');if(!c)return;c.innerHTML=cms.skills.map(function(r){return '<div class="tool-chip"><span class="dot"></span>'+esc(lang(r,'name'))+'</div>';}).join('');}
+  function renderCareerTimeline(){var el=document.getElementById('careerTimeline');if(!el)return;var raw=getSetting('about.timeline');var rows=[];try{rows=JSON.parse(raw||'[]')}catch(e){}if(!Array.isArray(rows))rows=[];el.innerHTML=rows.filter(function(x){return x&&x.visible!==false&&(x.role_en||x.role_ar)}).sort(function(a,b){return Number(a.sort_order||0)-Number(b.sort_order||0)}).map(function(x){var ar=currentLang==='ar';var pick=function(k){return esc((ar?(x[k+'_ar']||x[k+'_en']):(x[k+'_en']||x[k+'_ar']))||'')};return '<article class="timeline-item"><div class="timeline-date">'+pick('date')+'</div><h4 class="timeline-role">'+pick('role')+'</h4><div class="timeline-org">'+pick('organization')+(x.type_en||x.type_ar?' · '+pick('type'):'')+'</div>'+(pick('location')?'<div class="timeline-meta">'+pick('location')+'</div>':'')+(pick('description')?'<p class="timeline-desc">'+pick('description')+'</p>':'')+'</article>';}).join('');}
   function renderCerts(){var c=document.getElementById('certsContainer');if(!c)return;c.innerHTML=cms.certs.map(function(r){var done=String(r.status_en||'').toLowerCase().indexOf('completed')>=0;var featured=Number(r.featured)===1;var status=esc(lang(r,'status'));var name=esc(lang(r,'name'));var bg=r.logo_url?'<span class="cert-bg" aria-hidden="true" style="background-image:url(&quot;'+esc(r.logo_url)+'&quot;)"></span>':'';return '<div class="cert-card '+(featured?'featured ':'')+(done?'done':'')+'" data-watermark="'+name+'">'+bg+'<span class="cert-status '+(done?'done':'dev')+'">'+status+'</span><h3>'+name+(r.score?' <span class="cert-score">'+esc(r.score)+'</span>':'')+'</h3><p>'+esc(lang(r,'desc'))+'</p>'+(r.provider?'<small>'+esc(r.provider)+'</small>':'')+(r.credential_url?'<a class="project-link" href="'+esc(r.credential_url)+'" target="_blank" rel="noopener">Credential ↗</a>':'')+'</div>';}).join('');}
   var BUILTIN_SECTION_ORDER=['home','about','certs','what-i-do','work','videos','impact','skills','insights','brand','contact'];
   function sectionKey(el){return el.getAttribute('data-cms-section')||el.id||'';}
@@ -2098,13 +2091,13 @@ document.addEventListener('DOMContentLoaded', function(){
     cms.sections=Array.isArray(rs[6])?rs[6]:[];
     applySettings();
     if(typeof baseApplyLang==='function') baseApplyLang(currentLang);
-    renderServices();renderApproach();renderSkills();renderCerts();renderCustomSections();renderNav();applySectionOrder();
+    renderServices();renderApproach();renderSkills();renderCareerTimeline();renderCerts();renderCustomSections();renderNav();applySectionOrder();
     if(window.refreshCms)window.refreshCms();
   }
   // Mark navigation anchors and refresh their labels without disturbing existing menu structure.
   document.querySelectorAll('#site-header .nav-links a[href^="#"], #mobileMenu a[href^="#"]').forEach(function(a){var h=a.getAttribute('href');var slug=h?h.slice(1):'';if(['home','about','work','videos','skills','insights','contact'].indexOf(slug)>=0)a.setAttribute('data-cms-nav',slug);});
   document.addEventListener('DOMContentLoaded',load);
-  if(typeof baseApplyLang==='function'){window.applyLang=function(l){baseApplyLang(l);setTimeout(function(){renderServices();renderApproach();renderSkills();renderCerts();renderCustomSections();renderNav();applySectionOrder();if(window.refreshCms)window.refreshCms();},0);};}
+  if(typeof baseApplyLang==='function'){window.applyLang=function(l){baseApplyLang(l);setTimeout(function(){renderServices();renderApproach();renderSkills();renderCareerTimeline();renderCerts();renderCustomSections();renderNav();applySectionOrder();if(window.refreshCms)window.refreshCms();},0);};}
 })();
 </script>
 </html>
